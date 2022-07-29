@@ -1,0 +1,155 @@
+<!--
+  FILE : cgi-zoo.html
+  PROJECT : assignment-WDD-A03
+  PROGRAMMER : Yinruo Jiang
+  FIRST VERSION : 2021-10-06
+  SECOND VERSION : 2021-10-10
+  DESCRIPTION : This source mainly get the username and animal choice from user, and send data to PHP 
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My CGI Zoo</title>
+    <script type="text/javascript">
+      var fullName = "";
+      var whichAnimal = "";
+
+      //FUNCTION : function validateNameInputs(whichName)
+      //DESCRIPTION : This function validate the user input of name
+      //PARAMETERS : string whichName: the user input  
+      //RETURE: None
+      function validateNameInputs(whichName) 
+      {
+        var nameValid = false;
+        //reset the feedback section
+        document.getElementById("userFeedback1").innerHTML = " ";
+
+        if ((whichName.trim()).length == 0)
+        {
+          document.getElementById("userFeedback1").innerHTML = "You must provide a name.";
+          //set the error message
+        } 
+        else 
+        {
+          nameValid = true; 
+          fullName=whichName;
+        }
+
+        if(nameValid == true)
+        {
+          //no display section1
+          section1.style.display = "none";
+          display(whichName);
+          //display section2
+          section2.style.display = "block";
+        }
+      }
+
+      //FUNCTION : function animalChange(selectObj)
+      //DESCRIPTION : This function will trigger when the mouse click the dropdown list, if user do not choose their animal, will display //              error message
+      //PARAMETERS : string selectObj: the user input 
+      //RETURE: None 
+      function animalChange(selectObj)
+      {
+        document.getElementById("userFeedback2").innerHTML = " ";
+        var idx = selectObj.selectedIndex;
+        // get the value of the selected option
+        var whichAnimal = selectObj.options[idx].value;
+
+        if (whichAnimal=="empty")
+        {
+          //disable submit button to avoid misoperation
+          document.getElementById("animalBtn").disabled = true;
+          //set error message
+          document.getElementById("userFeedback2").innerHTML = "You must choose an animal.";
+        } 
+        else 
+        {
+          //enable submit button as the animal validation pass
+          document.getElementById("animalBtn").disabled = false;
+          //reset error message
+          document.getElementById("userFeedback2").innerHTML = " ";
+        }
+      }
+
+      //FUNCTION : function display(whichName) 
+      //DESCRIPTION : This function displays welcome titles
+      //PARAMETERS : string whichName: the user input
+      //RETURE: None
+      function display(whichName)
+      {
+        //set welcome title in section2
+        welcomeTitle.innerHTML = "Hi, " + whichName;
+        //pass username in hidden
+        var elem = document.getElementById("fname1");
+        elem.value = fullName;
+      }
+
+      //FUNCTION : function validateALL() 
+      //DESCRIPTION : This function validate user input when they submit the form to CGI
+      //PARAMETERS : None
+      //RETURE: None
+      function validateALL()
+      {
+        var shouldSubmit=true;
+        if (fullName == ""|| whichAnimal == "")
+        {
+          shouldSubmit=false;
+        }
+        return shouldSubmit;
+      }
+    </script>
+    <style>
+      .center {
+        text-align: center;
+      }
+      p.oblique 
+      {
+        font-style: oblique;
+      }
+      body 
+      {
+        background-image: url('theZoo/zoo_logo.png');
+        background-repeat: no-repeat;
+        background-position: right top;
+        margin-right: 200px;
+        background-size: 100% 100%;
+        background-attachment: fixed;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="section1" class="center"> 
+      <h2 class="oblique" style="color:darkorange;">Welcome to the Zoo!</h2>
+      <label class="oblique" style="color:darkorange;">Please enter your name:</label>
+      <input type="text" STYLE="font-size: 12px; background-color: lightyellow;" size="20" placeholder="" id="fname" name="fname" value=""/>
+      <input id="SubmitButton1" type="button" value="Submit" onclick="validateNameInputs(fname.value);" />
+      <br><br>
+      <div id="userFeedback1" style="color:red;" class="center" ></div>
+    </div>
+    <Form name="MyForm" action="animals.exe" method="GET" onSubmit="return validateAll();">
+      <div id="section2" style="display:none" class="center">
+        <h2 id="welcomeTitle" class="center" class="oblique" style="color:darkorange;"></h2>
+        <label class="center" class="oblique" style="color:darkorange;">Please choose an animal:</label>
+        <select name="animal" id="animal" STYLE="font-size: 12px; background-color: lightyellow;" onclick="animalChange(this);"/>
+          <option value="empty"> </option>
+          <option value="Amphibians">Amphibians</option>
+          <option value="Birds">Birds</option>
+          <option value="Fish">Fish</option>
+          <option value="Invertebrates">Invertebrates</option>
+          <option value="Mammals">Mammals</option>
+          <option value="Reptiles">Reptiles</option>
+        </select>
+        <br><br><br>
+        <input type="hidden" id="fname1" name="fname1" value = "" />
+        <INPUT type="submit" id = "animalBtn" value="Search for My Animal" disabled/>
+        <br><br>
+        <div id="userFeedback2" style="color:red;" class="center"></div>
+      </div>
+      
+    </form>
+  </body>
+</html>
+
+

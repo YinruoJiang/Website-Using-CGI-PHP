@@ -1,0 +1,5 @@
+<ul>
+Birds:
+<li>Evolved from dinosaurs</li>
+<li>Their characters:coats of feathers, warm-blooded metabolisms,memorable songs, ability to adapt to a wide range of habitats</li>
+</ul> 

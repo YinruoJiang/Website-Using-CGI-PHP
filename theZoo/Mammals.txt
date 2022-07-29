@@ -1,0 +1,5 @@
+<ul>
+Mammals:
+<li>The least diverse animal groups</li>
+<li>Their characters:hair or fur, milk, warm-blooded metabolisms</li>
+</ul>
